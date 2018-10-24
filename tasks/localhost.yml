@@ -1,6 +1,5 @@
 - name: import rpm key
   command: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-  when: (metricbeat_ip == 
 - name: install java
   yum:
     name: jre

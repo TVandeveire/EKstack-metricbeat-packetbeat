@@ -7,9 +7,9 @@
   tags: metricbeat
 
 - import_tasks: localhost.yml
-  when: ( metricbeat_ip == "localhost")
+  when: metricbeat_ip == "localhost"
 - import_tasks: hosts.yml
-  when: ( metricbeat_ip != "localhost")
+  when: metricbeat_ip != "localhost"
 
 
 

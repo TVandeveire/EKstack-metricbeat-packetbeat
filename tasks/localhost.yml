@@ -63,5 +63,9 @@
     name: elasticsearch.service
     state: started   
     enabled: yes
+- name: Waiting for port 5601 to become open on the host
+  wait_for:
+    port: 5601
+    delay: 30
 - name: enable metricbeat dashboards
   command: metricbeat setup --dashboards

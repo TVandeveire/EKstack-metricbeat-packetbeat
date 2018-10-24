@@ -31,13 +31,6 @@
     path: /etc/elasticsearch/elasticsearch.yml
     line: 'network.host: 0.0.0.0'
     insertbefore: BOF
-    when: ( host == "localhost")
-- name: add external access to elasticsearch config
-  lineinfile:
-    path: /etc/elasticsearch/elasticsearch.yml
-    line: 'network.host: {{ server_ip }}'
-    insertbefore: BOF
-    when: ( host != "localhost")
 - name: change elasticsearch clustername
   lineinfile:
     path: /etc/elasticsearch/elasticsearch.yml
@@ -62,6 +55,45 @@
   service:
     name: elasticsearch.service
     state: started   
+    enabled: yes
+- name: "Download metricbeat"
+  command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.4.2-x86_64.rpm
+- name: "Install metricbeat"
+  command: sudo rpm -vi metricbeat-6.4.2-x86_64.rpm
+- name: Add modules to metricbeat
+  blockinfile:
+    dest: /etc/metricbeat/metricbeat.yml
+    block: |
+      metricbeat.modules:
+      - module: system
+      metricsets:
+      - cpu             # CPU usage
+      - load            # CPU load averages
+      - memory          # Memory usage
+      - network         # Network IO
+      - process         # Per process metrics
+      - process_summary # Process summary
+      - uptime          # System Uptime
+      #- core           # Per CPU core usage
+      #- diskio         # Disk IO
+      #- filesystem     # File system usage for each mountpoint
+      #- fsstat         # File system summary metrics
+      #- raid           # Raid
+      - socket         # Sockets and connection info (linux only)
+      enabled: true
+      period: 10s
+      processes: ['.*']
+      # Configure the metric types that are included by these metricsets.
+      cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
+      core.metrics: ["percentages"]  # The other available option is ticks.
+      output.elasticsearch:
+        hosts: ["{{ metricbeat_ip }}:9200"]
+      setup.kibana:
+        host: "{{ metricbeat_ip }}:5601"
+- name: Start service metricbeat
+  service:
+    name: metricbeat.service
+    state: started      
     enabled: yes
 - name: Waiting for port 5601 to become open on the host
   wait_for:

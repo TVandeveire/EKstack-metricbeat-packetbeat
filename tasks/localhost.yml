@@ -1,0 +1,68 @@
+- name: import rpm key
+  command: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  when: (metricbeat_ip == 
+- name: install java
+  yum:
+    name: jre
+    state: latest
+- name: Copy elasticsearch repo file
+  copy:
+    src: templates/elasticsearch.repo.j2
+    dest: /etc/yum.repos.d/elasticsearch.repo
+    owner: root
+    group: root
+    mode: 0644
+- name: Copy kibana repo file
+  copy:
+    src: templates/kibana.repo.j2
+    dest: /etc/yum.repos.d/kibana.repo
+    owner: root
+    group: root
+    mode: 0644
+- name: install elasticsearch
+  yum:
+    name: elasticsearch
+    state: latest
+- name: install kibana
+  yum:
+    name: kibana
+    state: latest
+- name: add external access to elasticsearch config
+  lineinfile:
+    path: /etc/elasticsearch/elasticsearch.yml
+    line: 'network.host: 0.0.0.0'
+    insertbefore: BOF
+    when: ( host == "localhost")
+- name: add external access to elasticsearch config
+  lineinfile:
+    path: /etc/elasticsearch/elasticsearch.yml
+    line: 'network.host: {{ server_ip }}'
+    insertbefore: BOF
+    when: ( host != "localhost")
+- name: change elasticsearch clustername
+  lineinfile:
+    path: /etc/elasticsearch/elasticsearch.yml
+    line: 'cluster.name: Green.local'
+    insertbefore: BOF
+- name: add external access to kibana config
+  lineinfile:
+    path: /etc/kibana/kibana.yml
+    line: 'server.host: 0.0.0.0'
+    insertbefore: BOF
+- name: Link kibana to elasticsearch
+  lineinfile:
+    path: /etc/kibana/kibana.yml
+    line: 'elasticsearch.url: "http://localhost:9200"'
+    insertbefore: BOF
+- name: Start service kibana
+  service:
+    name: kibana.service
+    state: started      
+    enabled: yes
+- name: Start service elasticsearch
+  service:
+    name: elasticsearch.service
+    state: started   
+    enabled: yes
+- name: enable metricbeat dashboards
+  command: metricbeat setup --dashboards

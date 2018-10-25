@@ -1,5 +1,7 @@
 - name: import rpm key
-  command: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+  rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 - name: install java
   yum:
     name: jre
@@ -56,10 +58,10 @@
     name: elasticsearch.service
     state: started   
     enabled: yes
-- name: "Download metricbeat"
-  command: curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.4.2-x86_64.rpm
-- name: "Install metricbeat"
-  command: sudo rpm -vi metricbeat-6.4.2-x86_64.rpm
+- name: install metricbeat
+  yum:
+    name: https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.4.2-x86_64.rpm
+    state: present
 - name: Add modules to metricbeat
   blockinfile:
     dest: /etc/metricbeat/metricbeat.yml

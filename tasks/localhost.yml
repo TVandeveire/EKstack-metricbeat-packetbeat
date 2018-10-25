@@ -89,9 +89,9 @@
       cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
       core.metrics: ["percentages"]  # The other available option is ticks.
       output.elasticsearch:
-        hosts: ["{{ metricbeat_ip }}:9200"]
+        hosts: ["localhost:9200"]
       setup.kibana:
-        host: "{{ metricbeat_ip }}:5601"
+        host: "localhost:5601"
 - name: Start service metricbeat
   service:
     name: metricbeat.service

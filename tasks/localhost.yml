@@ -103,3 +103,22 @@
     delay: 30
 - name: enable metricbeat dashboards
   command: metricbeat setup --dashboards
+- name: install packetbeat
+  yum:
+    name: https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.4.2-x86_64.rpm
+    state: present
+- name: Add modules to packetbeat
+  blockinfile:
+    dest: /etc/packetbeat/packetbeat.yml
+    block: |
+         packetbeat.interfaces.device: any
+         output.elasticsearch:
+           hosts: ["localhost:9200"]
+         setup.kibana:
+           host: "localhost:5601"
+- name: Start service packetbeat
+  systemd:
+    name: packetbeat
+    enabled: yes
+- name: enable the f***ing packetbeat dashboard
+  command: packetbeat setup --dashboards

@@ -10,4 +10,4 @@ Als metricbeat_ip: 'localhost' (default) is, dan wordt de role volledig geïnsta
 Als je een systeem wilt installeren als een metricbeat client dan dien je de variabele 'metricbeat_ip' aan te passen naar het ip adres van de elasticsearch server.  
 
 # Defaults  
-`metricbeat_ip: 'localhost'`
+`metricbeat_ip:'localhost'`

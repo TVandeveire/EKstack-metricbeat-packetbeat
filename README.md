@@ -1,5 +1,5 @@
-# Metricbeat
-Ansible role for installing Elasticsearch Kibana with metricbeat & packetbeat
+# EKstack Metricbeat Packetbeat
+Ansible role voor het installeren van Elasticsearch, Kibana, Metricbeat, Packetbeat
 
 ## Monitoring server
 De role heeft maar 1 variabele, deze moet aangepast worden naargelang de netwerk configuratie.  

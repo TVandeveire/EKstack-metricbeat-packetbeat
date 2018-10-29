@@ -5,14 +5,7 @@
     - "{{ ansible_os_family }}.yml"
     - default.yml
   tags: metricbeat
-
 - import_tasks: localhost.yml
   when: metricbeat_ip == "localhost"
 - import_tasks: hosts.yml
   when: metricbeat_ip != "localhost"
-
-
-
-
-
-

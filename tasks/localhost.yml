@@ -120,5 +120,5 @@
   systemd:
     name: packetbeat
     enabled: yes
-- name: enable the f***ing packetbeat dashboard
+- name: enable the packetbeat dashboards
   command: packetbeat setup --dashboards

@@ -8,14 +8,14 @@
     state: latest
 - name: Copy elasticsearch repo file
   copy:
-    src: templates/elasticsearch.repo.j2
+    src: "{{ role_path }}/templates/elasticsearch.repo.j2"
     dest: /etc/yum.repos.d/elasticsearch.repo
     owner: root
     group: root
     mode: 0644
 - name: Copy kibana repo file
   copy:
-    src: templates/kibana.repo.j2
+    src: "{{ role_path }}/templates/kibana.repo.j2"
     dest: /etc/yum.repos.d/kibana.repo
     owner: root
     group: root

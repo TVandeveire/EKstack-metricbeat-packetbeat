@@ -107,7 +107,7 @@
     port: 5601
     delay: 30
 - name: enable metricbeat dashboards
-  command: metricbeat setup --dashboards
+  command: metricbeat setup
 - name: install packetbeat
   yum:
     name: https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-6.4.2-x86_64.rpm
@@ -126,4 +126,4 @@
     name: packetbeat
     enabled: yes
 - name: enable the packetbeat dashboards
-  command: packetbeat setup --dashboards
+  command: packetbeat setup

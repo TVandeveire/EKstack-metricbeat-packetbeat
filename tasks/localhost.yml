@@ -48,6 +48,11 @@
     path: /etc/kibana/kibana.yml
     line: 'elasticsearch.url: "http://localhost:9200"'
     insertbefore: BOF
+- name: Set default dashboard
+  lineinfile:
+    path: /etc/kibana/kibana.yml
+    line: 'kibana.defaultAppId: "dashboard/Metricbeat-system-overview"'
+    insertbefore: BOF
 - name: Start service kibana
   service:
     name: kibana.service

@@ -13,6 +13,13 @@
     owner: root
     group: root
     mode: 0644
+- name: Copy logstash repo file
+  copy:
+    src: "{{ role_path }}/templates/logstash.repo.j2"
+    dest: /etc/yum.repos.d/logstash.repo
+    owner: root
+    group: root
+    mode: 0644
 - name: Copy kibana repo file
   copy:
     src: "{{ role_path }}/templates/kibana.repo.j2"
@@ -23,6 +30,10 @@
 - name: install elasticsearch
   yum:
     name: elasticsearch
+    state: latest
+- name: install logstash
+  yum:
+    name: logstash
     state: latest
 - name: install kibana
   yum:
@@ -52,6 +63,10 @@
   lineinfile:
     path: /etc/kibana/kibana.yml
     line: 'kibana.defaultAppId: "dashboard/Metricbeat-system-overview"'
+- name: Set bind address logstash
+  lineinfile:
+    path: /etc/logstash/logstash.yml
+    line: 'http.host: "0.0.0.0"'
     insertbefore: BOF
 - name: Start service kibana
   service:

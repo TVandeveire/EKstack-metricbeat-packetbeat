@@ -142,3 +142,17 @@
     enabled: yes
 - name: enable the packetbeat dashboards
   command: packetbeat setup
+  
+  
+- name: install auditbeat
+  yum:
+    name: auditbeat
+    state: present
+
+- name: Start service auditbeat
+  systemd:
+    name: auditbeat
+    enabled: yes
+
+- name: enable the auditbeat dashboards
+  command: auditbeat setup

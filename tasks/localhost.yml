@@ -156,6 +156,7 @@
 - name: Start service auditbeat
   systemd:
     name: auditbeat
+    state: started
     enabled: yes
 - name: enable the auditbeat dashboards
   command: auditbeat setup

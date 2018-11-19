@@ -11,3 +11,6 @@ Als je een systeem wilt installeren als een metricbeat client dan dien je de var
 
 ## Defaults  
 `metricbeat_ip:'localhost'`
+
+## Contributors
+[Robin De Cock](https://github.com/RobinHogent)

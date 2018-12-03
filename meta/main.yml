@@ -11,7 +11,7 @@ galaxy_info:
   galaxy_tags:
     - system
     - p3ops
-    - ELKstack
-    - Auditbeat
-    - Metricbeat
+    - elkstack
+    - auditbeat
+    - metricbeat
 dependencies: []

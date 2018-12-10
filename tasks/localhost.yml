@@ -120,7 +120,7 @@
 - name: Waiting for port 5601 to become open on the host
   wait_for:
     port: 5601
-    delay: 30
+    delay: 90
 - name: enable metricbeat dashboards
   command: metricbeat setup
 - name: install packetbeat
